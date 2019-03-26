@@ -1,0 +1,45 @@
+extends: [
+  'airbnb-base',
+  'plugin:flowtype/recommended',
+  'prettier',
+  'plugin:jest/recommended'
+]
+env: { node: true, 'jest': true }
+plugins: [ 'prettier','flowtype','jest' ]
+globals: {
+  'db': true,
+  'tableNames': true
+}
+rules: {
+  'prettier/prettier': [
+    'error',
+    {
+      singleQuote: true, 
+      trailingComma: 'all',
+      bracketSpacing: true,
+      semi: false,
+      parser: flow
+    },
+  ],
+  semi: [0],
+  no-param-reassign: [0],
+  import/no-extraneous-dependencies: [0],
+  import/extensions:[
+    off,
+    'never'],
+  prefer-destructuring: ['error', {
+      'VariableDeclarator': {
+        'array': true,
+        'object': true
+      },
+      'AssignmentExpression': {
+        'array': true,
+        'object': false
+      }
+    }, {
+      'enforceForRenamedProperties': false
+    }],
+settings:[
+  flowtype:[
+    onlyFilesWithFlowAnnotation: true]]
+}
