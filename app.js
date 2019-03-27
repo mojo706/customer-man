@@ -14,3 +14,5 @@ const port = process.env.PORT || 7777
 server.listen(port, () => {
   console.log(`Server running on port ${port}`) // eslint-disable-line no-console
 })
+
+module.exports = server

@@ -6,4 +6,5 @@ module.exports = app => {
   app.use(bodyParser.json())
 
   app.use('/api/customers', customerRouter)
+  return app
 }
