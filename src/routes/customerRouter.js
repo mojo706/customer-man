@@ -1,22 +1,29 @@
 const express = require('express')
 const customerController = require('../controllers/customerController')
 const {
-  validateUser,
-  validateUserId,
+  validateCustomer,
+  validateCustomerId,
 } = require('../middleware/customerMiddleware')
 
-const userRouter = express.Router()
+const customerRouter = express.Router()
 
 const router = () => {
-  userRouter.route('/').post(validateUser, customerController.addCustomer)
+  customerRouter.route('/search').get(customerController.findByNameOrPhone)
 
-  userRouter.use('/:userId', validateUserId)
+  customerRouter
+    .route('/')
+    .get(customerController.getAllCustomers)
+    .post(validateCustomer, customerController.addCustomer)
 
-  userRouter
-    .route('/:userId')
-    .put(validateUser, customerController.updateCustomer)
-    .delete(customerController.deleteCustomer)
-  return userRouter
+  customerRouter.use('/:customerId', validateCustomerId)
+
+  customerRouter
+    .route('/:customerId')
+    .get(validateCustomerId, customerController.findByID)
+    .put(validateCustomerId, customerController.updateCustomer)
+    .delete(validateCustomerId, customerController.deleteCustomer)
+
+  return customerRouter
 }
 
 module.exports = router

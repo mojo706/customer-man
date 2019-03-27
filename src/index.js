@@ -1,5 +1,5 @@
 const bodyParser = require('body-parser')
-const customerRouter = require('./customerRouter')()
+const customerRouter = require('./routes/customerRouter')()
 
 module.exports = app => {
   app.use(bodyParser.urlencoded({ extended: true }))

@@ -1,5 +1,5 @@
 const Joi = require('joi')
-const { Customers } = require('../models')
+const { Customers } = require('../models/index')
 
 const schema = {
   name: Joi.string().required(),
@@ -16,19 +16,22 @@ const validateCustomer = (req, res, next) => {
   })
 }
 
-const validateUserId = async (req, res, next) => {
-  if (!req.params.userId) {
+const validateCustomerId = async (req, res, next) => {
+  if (!req.params.customerId) {
     res.status(400).json({
-      message: 'userId is missing!',
+      message: 'customerId is missing!',
     })
     return
   }
-  const customer = await Customers.findById(req.params.userId)
+  const customer = await Customers.findByPk(req.params.customerId)
   if (!customer) {
-    res.status(404).json({ message: 'A User with that userId does not exist' })
+    res
+      .status(404)
+      .json({ message: 'A user with that customerId does not exist' })
     return
   }
+  res.locals.customer = customer
   next()
 }
 
-module.exports = { validateCustomer, validateUserId }
+module.exports = { validateCustomer, validateCustomerId }
